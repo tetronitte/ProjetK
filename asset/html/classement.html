@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>bonus2 boostrap</title>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <link rel="stylesheet" href="../css/style.css">
+        <link rel="icon" type="image/png" href="../images/capture.PNG" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body id="body">
+        <div class="container-fluid">
+
+            <header class="header">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <a class="navbar-brand" href="../../index.html">
+                        <img src="../images/capture.PNG" class="img-fluid img-brand rounded" alt="">
+                       Find-Us
+                      </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                      <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="leveltheme.html">Jouer</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="classement.html">Classement</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="actus.html">Actus</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal" id="log_in" data-backdrop="false">Connexion</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="admin2.html" id="admin"  style="display:none;">Admin</a>
+                        </li>
+                      <li class="nav-item welcome-link">
+                          <p class="text-white welcome_nickname"><a href="profil.html"><span id="welcomeNickname" style="display:none;"></span></a></p>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#" id="logout"  style="display:none;">Deconnexion</a>
+                    </li>
+                      </ul>
+                    </div>
+                  </nav>
+                </header>
+
+            <main class="col-12">
+                <h1 class="text-center mt-5 mb-5">Classement</h1>
+                <ol class="list-group mb-5" id="list-group">
+
+
+
+                </ol>
+
+            </main>
+
+            <footer class="footer">
+                <div class="row">
+                    <div class="col-4"><p class="text-center text-white padding-top-sublime"><a href="#" data-toggle="modal" data-target="#MentionsModale">Mentions légales</a></p></div>
+                    <div class="col-4">
+                        <div class="row row-image">
+                            <div class="col-4"><img src="https://bassin-arcachon.com/wp-content/uploads/2017/02/logo-facebook-blanc.png" class="img-logo img-fluid"></div>
+                            <div class="col-4"><img src="https://bassin-arcachon.com/wp-content/uploads/2017/02/logo-twitter-blanc.png" class="img-logo img-fluid"></div>
+                            <div class="col-4"><img src="https://www.lagriffenoire.com/template/images/resoSocio/icon-youtube.png" class="img-logo img-fluid"></div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <p class="text-center text-white copy-text padding-top-sublime">Copyright Find-us 2021</p>
+                    </div>
+                </div>
+            </footer>
+
+
+            <!-- Modal mentions légales-->
+            <div class="modal fade" id="MentionsModale" tabindex="-1" role="dialog" aria-labelledby="MentionsModaleLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header bg-dark text-white">
+                      <h5 class="modal-title" id="MentionsModaleLabel">Mentions legales</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body text-center">
+                      Données personnelles
+Les informations recueillies à partir de ce formulaire font l’objet d’un traitement informatique destiné à :<br>
+
+Find-us<br><br>
+
+Pour la ou les finalités suivantes :<br>
+
+La conservation de vos données dans le respect des RGPD.<br><br>
+
+Conformément à la loi « informatique et libertés » du 6 janvier 1978 modifiée, vous disposez d’un droit d’accès et de rectification aux informations qui vous concernent.<br>
+
+Vous pouvez accèder aux informations vous concernant en vous adressant à : find-us@compleo.fr<br>
+Vous pouvez également, pour des motifs légitimes, vous opposer au traitement des données vous concernant.<br><br>
+
+Notre société :<br>
+
+Find-us<br><br>
+
+Contact : administration@find-us.fr<br>
+
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end -->
+
+              <!--modale connexion-->
+              <div class="modal fade bd-example-modal-lg" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content text-center">
+                    <div class="modal-header text-center bg-dark">
+                      <h5 class="modal-title text-center text-white" id="MentionsModaleLabel">Connexion</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+       
+                        <div class="form-group">
+                          <input type="email" class="form-control" id="identifiant" aria-describedby="emailHelp" placeholder="Votre mail / pseudo">
+                        </div>
+                        <div class="form-group">
+                          <input type="password" class="form-control" id="loginPassword" placeholder="Votre mot de passe">
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="login">Connexion</button>
+                 
+
+                        <p class="text-center"><span id="loginError"></span></p>
+                      <p class="inscription-p text-center">Vous n'avez pas de compte? Veuillez vous <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#signinModal" data-backdrop="false">Inscrire ici.</a></p>
+                       
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!--end-->
+                         <!--modale inscription-->
+                         <div class="modal fade bd-example-modal-lg" id="signinModal" tabindex="-1" role="dialog" aria-labelledby="signinModal" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content text-center">
+                              <div class="modal-header text-center bg-dark">
+                                <h5 class="modal-title text-center text-white" id="MentionsModaleLabel">Inscription</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                    
+                                  <div class="form-group">
+                                    <input type="text" class="form-control" id="nickname" maxlenght="50" aria-describedby="pseudo" placeholder="Votre pseudo">
+                                  </div>
+                                  <div class="form-group">
+                                    <input type="email" class="form-control" id="email" placeholder="Votre Email">
+                                  </div>
+                                  <div class="form-group">
+                                    <input type="password" class="form-control" id="signinPassword"  placeholder="Password">
+                                  </div>
+                                  <div class="form-group">
+                                    <input type="password" class="form-control" id="verifPassword"  placeholder="verification password">
+                                  </div>
+                                  <button type="submit" class="btn btn-primary" id="signin">Inscription</button>
+
+          
+                                <p class="text-center"><span id="signinError"></span></p>
+                              
+                                 
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+              <!-- end-->
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+        <script src="../js/classement.js"></script>
+        <script src="../js/login.js"></script>
+        <script src="../js/signin.js"></script>
+    </body>
+</html>

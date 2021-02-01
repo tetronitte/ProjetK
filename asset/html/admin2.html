@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="FR">
+
+<head>
+    <meta charset=utf-8>
+    <meta name="viewport" content="initial-scale = 1.0</li> maximum-scale = 1.0</li> user-scalable = no</li> width = device-width">
+    <link rel="icon" type="image/png" href="../images/capture.PNG" />
+    <link rel="stylesheet" href="../BootStrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="../BootStrap/bootstrap-grid.css" />
+    <link rel="stylesheet" href="../BootStrap/bootstrap-grid.min.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <title>Admin</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <header class="header">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="../../index.html">
+                    <img src="../images/capture.PNG" class="img-fluid img-brand rounded" alt="">
+                   Find-Us
+                  </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                  <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="leveltheme.html">Jouer</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="classement.html">Classement</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="actus.html">Actus</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal" id="log_in" data-backdrop="false">Connexion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin2.html" id="admin"  style="display:none;">Admin</a>
+                    </li>
+                  <li class="nav-item welcome-link">
+                      <p class="text-white welcome_nickname"><a href="profil.html"><span id="welcomeNickname" style="display:none;"></span></a></p>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#" id="logout"  style="display:none;">Deconnexion</a>
+                </li>
+                  </ul>
+                </div>
+              </nav>
+            </header>
+        <main>
+            <div class="container-fluid">
+               
+                    <div class="row">
+
+                        <div class="col-md-4 col-12 text-center">
+                            <h3>Liste de Thème</h3>
+
+                            <div class="container-item">
+                            <div class="row row-item">
+                                <div class="col-10">Transport</div>
+                                <div class="col-2"><button id="subTheme1" class="btn btn-warning float-right">-</button></div>
+                            </div>
+                            <div class="row row-item">
+                                <div class="col-10">Animaux</div>
+                                <div class="col-2"><button id="subTheme1" class="btn btn-warning float-right">-</button></div>
+                            </div>
+                            <div class="row row-item">
+                                <div class="col-10">Sciences</div>
+                                <div class="col-2"><button id="subTheme1" class="btn btn-warning float-right">-</button></div>
+                            </div>
+                            </div>
+
+                            <div class="col-12 text-center" id="newTheme">
+                                <input type="text" id="addNewTheme" placeholder="Nom du nouveau thème"/>
+                                <button id="addTheme" class="btn btn-success">+</button>
+                            </div>
+                            
+
+                        </div>
+
+
+
+                        <div class="col-md-4 col-12 text-center">
+                            <h3>Liste de niveau</h3>
+
+                            <div class="container-item">
+                            <div class="row row-item">
+                                <div class="col-10">Niveau 1</div>
+                                <div class="col-2"><button id="subTheme1" class="btn btn-warning float-right">-</button></div>
+                            </div>
+                            <div class="row row-item">
+                                <div class="col-10">Niveau 2</div>
+                                <div class="col-2"><button id="subTheme1" class="btn btn-warning float-right">-</button></div>
+                            </div>
+                            <div class="row row-item">
+                                <div class="col-10">Niveau 3</div>
+                                <div class="col-2"><button id="subTheme1" class="btn btn-warning float-right">-</button></div>
+                            </div>
+                            </div>
+
+                            <div class="col-12 text-center" id="newLevel">
+                                <input type="text" id="addNewLevel" placeholder="Nouveau niveau"/>
+                                <button id="addLevel" class="btn btn-success">+</button>
+                            </div>
+    
+
+                        </div>
+
+                        <div class="col-md-4 col-12 text-center">
+                            <h3>Liste de mots</h3>
+
+                            <div class="container-item">
+                            <div class="row row-item">
+                                <div class="col-10">velo;Transport à 2 roues où il faut pédaler</div>
+                                <div class="col-2"><button id="subTheme1" class="btn btn-warning float-right">-</button></div>
+                            </div>
+                            <div class="row row-item">
+                                <div class="col-10">trottinette;Transport à deux roues où il faut pousser avec le pied</div>
+                                <div class="col-2"><button id="subTheme1" class="btn btn-warning float-right">-</button></div>
+                            </div>
+                            <div class="row row-item">
+                                <div class="col-10">moto;Transport à deux roues à moteur</div>
+                                <div class="col-2"><button id="subTheme1" class="btn btn-warning float-right">-</button></div>
+                            </div>
+                            <div class="row row-item">
+                                <div class="col-10">voiture;Transport à 4 roues à moteur</div>
+                                <div class="col-2"><button id="subTheme1" class="btn btn-warning float-right">-</button></div>
+                            </div>
+                            <div class="row row-item">
+                                <div class="col-10">bus;Transport en commun à 4 roues</div>
+                                <div class="col-2"><button id="subTheme1" class="btn btn-warning float-right">-</button></div>
+                            </div>
+                            <div class="row row-item">
+                                <div class="col-10">avion;Transport volant</div>
+                                <div class="col-2"><button id="subTheme1" class="btn btn-warning float-right">-</button></div>
+                            </div>
+                            <div class="row row-item">
+                                <div class="col-10">bateau;Transport marin</div>
+                                <div class="col-2"><button id="subTheme1" class="btn btn-warning float-right">-</button></div>
+                            </div>
+                            <div class="row row-item">
+                                <div class="col-10">train;Transport ferrovière</div>
+                                <div class="col-2"><button id="subTheme1" class="btn btn-warning float-right">-</button></div>
+                            </div>
+                            <div class="row row-item">
+                                <div class="col-10">fusee;Transport dans l'espace</div>
+                                <div class="col-2"><button id="subTheme1" class="btn btn-warning float-right">-</button></div>
+                            </div>
+                            <div class="row row-item">
+                                <div class="col-10">cheval;Transport animalier à 4 pattes</div>
+                                <div class="col-2"><button id="subTheme1" class="btn btn-warning float-right">-</button></div>
+                            </div>
+                            </div>
+
+
+                            <div class="col-12 text-center" id="newWord">
+                                <input type="text" id="addNewWord" placeholder="Nouveau mot"/>
+                                <button id="addWord" class="btn btn-success">+</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                        
+
+
+                        
+               
+
+            </div>
+        </main>
+        <footer class="footer">
+            <div class="row">
+                <div class="col-4">
+                    <p class="text-center text-white padding-top-sublime"><a href="#" data-toggle="modal"
+                            data-target="#MentionsModale">Mentions légales</a></p>
+                </div>
+                <div class="col-4">
+                    <div class="row row-image">
+                        <div class="col-4"><img
+                                src="https://bassin-arcachon.com/wp-content/uploads/2017/02/logo-facebook-blanc.png"
+                                class="img-logo img-fluid"></div>
+                        <div class="col-4"><img
+                                src="https://bassin-arcachon.com/wp-content/uploads/2017/02/logo-twitter-blanc.png"
+                                class="img-logo img-fluid"></div>
+                        <div class="col-4"><img
+                                src="https://www.lagriffenoire.com/template/images/resoSocio/icon-youtube.png"
+                                class="img-logo img-fluid"></div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <p class="text-center text-white copy-text padding-top-sublime">Copyright xxx 2021</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
+        integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
+        crossorigin="anonymous"></script>
+    <script src="../BootStrap/bootstrap.bundle.min.js"></script>
+    <script src="../js/admin.js"></script>
+
+</body>
+
+</html>
+
+
