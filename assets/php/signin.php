@@ -1,5 +1,7 @@
 <?php
 
+include('db_parameters.php');
+
 //Connexion à la db
 $dbh = new PDO('mysql:host=localhost;dbname=projetk','phpmyadmin', 'root');
 
