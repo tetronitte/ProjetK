@@ -1,34 +1,25 @@
-<span>INSCRIPTION</span><br/>
-<form action="signin.php" method="post">
-    <div><label for="nickname">Pseudo</label><input type="text" name="nickname"/></div>
-    <div><label for="password">Mot de passe</label><input type="text" name="password"/></div>
-    <div><label for="vPassword">Vérification de mot de passe</label><input type="text" name="vPassword"/></div>
-    <button type="submit">signin</button>
-</form>
-
-<?php
-session_start();
-var_dump($_COOKIE);
-if(isset($_COOKIE['nickname']) && isset($_COOKIE['pwd'])) {
-    echo '<p>Vous êtes connecté grâce aux cookies</p>';
-}
-else if(isset($_SESSION['nickname']) && isset($_SESSION['id'])) {
-    echo '<p>Vous êtes connecté</p>';
-}
-else {
-    echo '<br/>
-    <span>CONNEXION</span><br/>
-    <form action="login.php" method="post">
-        <div><label for="nickname">Pseudo</label><input type="text" name="nickname"/></div>
-        <div><label for="password">Mot de passe</label><input type="text" name="password"/></div>
-        <div><label for="autolog">Connexion automatique</label><input type="checkbox" id="autolog" name="autolog[]"/></div>
-        <button type="submit">login</button>
-    </form>';
-}
-?>
-<form action="logout.php" method="post">
-    <button type="submit">logout</button>
-</form>
-
-
-
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quizz</title>
+    <link href="assets/css/font-awesome/css/all.min.css?ver=1.2.0" rel="stylesheet">
+    <link href="assets/css/bootstrap.css?ver=1.2.0" rel="stylesheet">
+    <link href="assets/css/aos.css?ver=1.2.0" rel="stylesheet">
+    <link href="assets/css/main.css?ver=1.2.0" rel="stylesheet">
+    <noscript>
+      <style type="text/css">
+        [data-aos] {
+            opacity: 1 !important;
+            transform: translate(0) scale(1) !important;
+        }
+      </style>
+    </noscript>
+  </head>
+  <body>
+    <script src="assets/scripts/bootstrap.bundle.js?ver=1.2.0"></script>
+    <script src="assets/scripts/aos.js?ver=1.2.0"></script>
+    <script src="assets/scripts/main.js?ver=1.2.0"></script>
+  </body>
+</html>
