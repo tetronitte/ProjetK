@@ -4,11 +4,12 @@ $dbh = new PDO('mysql:host=localhost;dbname=projetk','phpmyadmin', 'root');
 
 //Requête préparée
 //fu -> find user
+//ut -> update token
 $fu = $dbh->prepare('SELECT utilisateurs_id, utilisateurs_pwd FROM utilisateurs WHERE utilisateurs_pseudo = :nickname');
+$ut = $dbh->prepare('UPDATE utilisateurs SET utilisateurs_token = :token WHERE utilisateurs_id = :id;');
 
 //Tableau d'erreurs
 $errors = array();
-
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -27,9 +28,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             if(password_verify($password,$res[0][1])) {//On vérifie le hachage du mot de passe en db et dans le formulaire
                 $_SESSION['nickname'] = $nickname;
                 $_SESSION['id'] = $res[0][0];
-                if($_POST['autolog'][0] == 'on') {//Si on veut se log automatiquement on créer des cookies
-                    setcookie('nickname',$nickname,time()+3600);
-                    setcookie('pwd',$password,time()+3600);
+                if($_POST['autolog'][0] == 'on') {//Si on veut se log automatiquement on créer un token
+                    $token = generateToken(64);
+                    setcookie('autolog',$token,time()+3600);
+                    updateToken($ut,$token,$res[0][0]);
                 }
             }
             else {
@@ -112,4 +114,29 @@ function validData($data) {
     $data = htmlspecialchars($data);//Convertit les caractères spéciaux
     return $data;
 }
+
+//Créer un token de connexion automatique
+//@param length : taille du token
+//@return token : le token de connexion
+function generateToken($length) {
+    $token = "";
+    $string = "123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@&#?!$%";
+    shuffle($string);
+    srand((double)microtime()*1000000);
+    for($i = 0; $i < $length ; $i++){
+        $token .= $string[rand()%strlen($string)];
+    }
+    return $token;
+}
+
+//Ajoute le token pour l'utilisateur en db
+//@param req : la requête à exécuter
+//@param token : le token à ajouter
+//@param id : l'id de l'utilisateur
+function updateToken($req,$token,$id) {
+    $req->bindParam(':token',$token);
+    $req->bindParam(':id',$id);
+    $req->execute();
+}
+
 ?>
