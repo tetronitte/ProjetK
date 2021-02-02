@@ -1,4 +1,7 @@
 <?php
+
+include('db_parameters.php');
+
 //Connexion à la db
 $dbh = new PDO('mysql:host=localhost;dbname=projetk','phpmyadmin', 'root');
 
@@ -29,7 +32,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['nickname'] = $nickname;
                 $_SESSION['id'] = $res[0][0];
                 if($_POST['autolog'][0] == 'on') {//Si on veut se log automatiquement on créer un token
-                    $token = generateToken(64);
+                    $token = generateToken(TOKEN_SIZE);
                     setcookie('autolog',$token,time()+3600);
                     updateToken($ut,$token,$res[0][0]);
                 }
@@ -96,13 +99,13 @@ function findUser($req,$nickname) {
 //Vérifie les caractère du pseudo
 //@param string : la chaine de caractère à vérifier
 function regexNickname($string) {
-    return preg_match('/^([0-9a-zA-ZàáâäæçéèêëîïôœùûüÿÀÂÄÆÇÉÈÊËÎÏÖÔŒÙÛÜŸ \-\']+)$/',$string);
+    return preg_match('/'.REGEX_NICKNAME.'/',$string);
 }
 
 //Vérifie les caractère du mot de passe
 //@param string : la chaine de caractère à vérifier
 function regexPassword($string) {
-    return preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{8,18}$/',$string);
+    return preg_match('/'.REGEX_PASSWORD.'/',$string);
 }
 
 //Transforme la chaine de caractère envoyée par le formulaire pour la sécurisée
