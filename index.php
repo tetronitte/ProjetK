@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Quizz</title>
     <link href="assets/css/font-awesome/css/all.min.css?ver=1.2.0" rel="stylesheet">
-    <link href="assets/css/bootstrap.min.css?ver=1.2.0" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link href="assets/css/aos.css?ver=1.2.0" rel="stylesheet">
     <link href="assets/css/main.css?ver=1.2.0" rel="stylesheet">
     <noscript>
@@ -100,7 +100,7 @@
       </div>
     </div>
   </div>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     <script src="assets/js/aos.js?ver=1.2.0"></script>
     <script src="assets/js/main.js?ver=1.2.0"></script>
   </body>

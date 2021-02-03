@@ -1,9 +1,0 @@
-
-E_NICKNAME_FALSE_CHARACTER : Votre pseudo contient des caractères non acceptés
-E_NICKNAME_EXIST : Ce pseudo éxiste déjà
-E_PWD_EQUAL_NICKNAME : Votre mot de passe ne peut être identique à votre pseudo
-E_PWD_LENGTH : Votre mot de passe doit faire entre 8 et 18 caractères
-E_PWD_FALSE_CHARACTER : Votre mot de passe doit comporter au moins 1 chiffre, 1 caractère spécial autorisé,
-            1 lettre minuscule et 1 lettre majuscule
-E_VPWD_FALSE : La vérification du mot de passe n'est pas correcte
-E_LOGIN_FALSE : Identifiant ou mot de passe inccorect
