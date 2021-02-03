@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION = array();
     session_destroy(); 
 }
-header('Location: http://php.projetk/');
+header('Location: http://php.projetk/assets/page/login_signin.php/');
 exit();
 
 

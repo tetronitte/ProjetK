@@ -38,11 +38,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             }
             else {
-                array_push($errors,'E_LOGIN_FALSE');
+                $errors[] = 'E_LOGIN_FALSE';
             }
         }
         else {
-            array_push($errors,'E_LOGIN_FALSE');
+            $errors[] = 'E_LOGIN_FALSE';
         }
     }
     //Si il y a une erreur qui est survenu entre temps
@@ -50,7 +50,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['errors'] = $errors;
     }
     //Redirection sur l'index
-    header('Location: http://php.projetk/');
+    header('Location: http://php.projetk/assets/page/login_signin.php/');
     exit();
 }
 
@@ -62,7 +62,7 @@ $dbh = null;
 function checkNickname() {
     if(isset($_POST['nickname']) && !empty($_POST['nickname'])) {
         $nickname = validData($_POST['nickname']);
-        if(!regexNickname($nickname)) array_push($errors,'E_NICKNAME_FALSE_CHARACTER');
+        if(!regexNickname($nickname)) $errors[] = 'E_NICKNAME_FALSE_CHARACTER';
         return $nickname;
     }
     else {
@@ -75,8 +75,8 @@ function checkNickname() {
 function checkPassword($nickname) {
     if(isset($_POST['password']) && !empty($_POST['password'])) {
         $password = validData($_POST['password']);
-        if(strlen($password) > 18 || strlen($password) < 8)  array_push($errors,'E_PWD_LENGTH');//Si 8 <= pwd <= 18
-        if(!regexPassword($password)) array_push($errors,'E_PWD_FALSE_CHARACTER');//Si au moins 1 chiffre, 1 caractère spécial, 1 lettre minuscule et 1 lettre majuscule
+        if(strlen($password) > 18 || strlen($password) < 8) $errors[] = 'E_PWD_LENGTH';//Si 8 <= pwd <= 18
+        if(!regexPassword($password)) $errors[] = 'E_PWD_FALSE_CHARACTER';//Si au moins 1 chiffre, 1 caractère spécial, 1 lettre minuscule et 1 lettre majuscule
         return $password;
     }
     else return null;

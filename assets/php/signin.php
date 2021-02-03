@@ -9,7 +9,7 @@ $dbh = new PDO('mysql:host=localhost;dbname=projetk','phpmyadmin', 'root');
 //enn -> exist nickname
 //iu -> insert user
 $enn = $dbh->prepare('SELECT utilisateurs_id FROM utilisateurs WHERE utilisateurs_pseudo LIKE :nickname');
-$iu = $dbh->prepare('INSERT INTO utilisateurs (utilisateurs_id, utilisateurs_pseudo, utilisateurs_pwd) VALUES (NULL,:nickname, :pwd);');
+$iu = $dbh->prepare('INSERT INTO utilisateurs (utilisateurs_id, utilisateurs_pseudo, utilisateurs_pwd, utilisateurs_token) VALUES (NULL,:nickname, :pwd, NULL);');
 
 
 //Tableau d'erreurs
@@ -18,9 +18,13 @@ $errors = array();
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $nickname = checkNickname($enn);
+    $tmp = array_checkNickname($enn);
+    $nickname = $tmp[0];
+    $errors = array_merge($errors,$tmp[1]);
     if ($nickname != null) {
-        $password = checkPassword($nickname);
+        $tmp = array_checkPassword($nickname);
+        $password = $tmp[0];
+        $errors = array_merge($errors,$tmp[1]);
     }    
     
     //Si il n'y a pas d'erreurs
@@ -33,7 +37,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['errors'] = $errors;
     }
     //Redirection sur l'index
-    header('Location: http://php.projetk/');
+    header('Location: http://php.projetk/assets/page/login_signin.php/');
     exit();
 }
 
@@ -41,32 +45,34 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 $dbh = null;
 
 //Vérification du pseudo
-//@return nickname : le pseudo de l'utilisateur 
-function checkNickname($enn) {
+//@return array : le pseudo de l'utilisateur et le tableau d'erreurs
+function array_checkNickname($enn) {
+    $err = array();
     if(isset($_POST['nickname']) && !empty($_POST['nickname'])) {
-        $nickname = validData($_POST['nickname']);
-        if(!regexNickname($nickname)) array_push($errors,'E_NICKNAME_FALSE_CHARACTER');
-        if(existNickname($enn,$nickname)) array_push($errors,'E_NICKNAME_EXIST');
-        return $nickname;
+        $nickname = str_validData($_POST['nickname']);
+        if(!bool_regexNickname($nickname)) $err[] = 'E_NICKNAME_FALSE_CHARACTER';
+        if(bool_existNickname($enn,$nickname)) $err[] = 'E_NICKNAME_EXIST';
+        return array($nickname,$err);
     }
     else {
-        return null;
+        return array(null,$err);
     }
 }
 
 //Vérification du mot de passe
-//@return password : le mot de passe de l'utilisateur 
-function checkPassword($nickname) {
+//@return array : le mot de passe de l'utilisateur et le tableau d'erreurs
+function array_checkPassword($nickname) {
+    $err = array();
     if(isset($_POST['password']) && !empty($_POST['password']) && isset($_POST['vPassword']) && !empty($_POST['vPassword'])) {
-        $password = validData($_POST['password']);
-        $vPassword = validData($_POST['vPassword']);
-        if($password == $nickname) array_push($errors,'E_PWD_EQUAL_NICKNAME');//Si le pseudo == pwd
-        if(strlen($password) > 18 || strlen($password) < 8)  array_push($errors,'E_PWD_LENGTH');//Si 8 <= pwd <= 18
-        if(!regexPassword($password)) array_push($errors,'E_PWD_FALSE_CHARACTER');//Si au moins 1 chiffre, 1 caractère spécial, 1 lettre minuscule et 1 lettre majuscule
-        if($password != $vPassword) array_push($errors,'E_VPWD_FALSE');//Si la vérification de mot de passe est bonne
-        return $password;
+        $password = str_validData($_POST['password']);
+        $vPassword = str_validData($_POST['vPassword']);
+        if($password == $nickname) $err[] = 'E_PWD_EQUAL_NICKNAME';//Si le pseudo == pwd
+        if(strlen($password) > 18 || strlen($password) < 8) $err[] = 'E_PWD_LENGTH';//Si 8 <= pwd <= 18
+        if(!bool_regexPassword($password)) $err[] = 'E_PWD_FALSE_CHARACTER';//Si au moins 1 chiffre, 1 caractère spécial, 1 lettre minuscule et 1 lettre majuscule
+        if($password != $vPassword) $err[] = 'E_VPWD_FALSE';//Si la vérification de mot de passe est bonne
+        return array($password,$err);
     }
-    else return null;
+    else return array(null,$err);
 }
 
 //Insert les paramètres dans la table utilisateurs de la db
@@ -76,13 +82,13 @@ function checkPassword($nickname) {
 function insertUser($req,$nickname,$pwd) {
     $req->bindParam(':nickname',$nickname);
     $req->bindParam(':pwd',$pwd);
-    $req->execute();
+    $tmp = $req->execute();
 }
 
 //Vérifie si l'utilisateur éxiste déjà
 //@param req : la requête à exécuter
 //@param nickname : le pseudo de l'utilisateur
-function existNickname($req,$nickname) {
+function bool_existNickname($req,$nickname) {
     $req->bindParam(':nickname',$nickname);
     $req->execute();
     $nbr = $req->fetchAll();//Retourne le nombre de ligne de la requete
@@ -92,20 +98,20 @@ function existNickname($req,$nickname) {
 
 //Vérifie les caractère du pseudo
 //@param string : la chaine de caractère à vérifier
-function regexNickname($string) {
+function bool_regexNickname($string) {
     return preg_match('/^([0-9a-zA-ZàáâäæçéèêëîïôœùûüÿÀÂÄÆÇÉÈÊËÎÏÖÔŒÙÛÜŸ \-\']+)$/',$string);
 }
 
 //Vérifie les caractère du mot de passe
 //@param string : la chaine de caractère à vérifier
-function regexPassword($string) {
+function bool_regexPassword($string) {
     return preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{8,18}$/',$string);
 }
 
 //Transforme la chaine de caractère envoyée par le formulaire pour la sécurisée
 //@param data : la chaine de caractère à vérifier
 //@return data : la chaine transformée
-function validData($data) {
+function str_validData($data) {
     $data = trim($data); //Supprime les espaces en début et fin de chaine
     $data = stripcslashes($data);//Supprime les antislash d'une chaine
     $data = htmlspecialchars($data);//Convertit les caractères spéciaux
