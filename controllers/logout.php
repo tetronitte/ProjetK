@@ -1,5 +1,7 @@
 <?php
 
+include('../const_path.php');
+
 //Requête préparée
 //dt -> update token
 $dt = $dbh->prepare('UPDATE utilisateurs SET utilisateurs_token = null WHERE utilisateurs_id = :id;');
@@ -17,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION = array();
     session_destroy(); 
 }
-header('Location: http://php.projetk/assets/page/login_signin.php/');
+header('Location: '.LOGIN_SIGNIN);
 exit();
 
 

@@ -1,6 +1,7 @@
 <?php
 
 include('db_parameters.php');
+include('../const_path.php');
 
 //Connexion à la db
 $dbh = new PDO('mysql:host=localhost;dbname=projetk','phpmyadmin', 'root');
@@ -50,7 +51,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['errors'] = $errors;
     }
     //Redirection sur l'index
-    header('Location: http://php.projetk/assets/page/login_signin.php/');
+    header('Location: '.LOGIN_SIGNIN);
     exit();
 }
 
