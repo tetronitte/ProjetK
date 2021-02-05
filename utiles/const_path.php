@@ -10,6 +10,8 @@
 
     //MODELS
     define('SIGNUP_MODEL',realpath('models/signup_model.php'));
+    define('LOGIN_MODEL',realpath('models/login_model.php'));
+    define('LOGOUT_MODEL',realpath('models/logout_model.php'));
 
     //VIEWS
     define('LOGIN_SIGNUP',realpath('views/login_signup.php'));

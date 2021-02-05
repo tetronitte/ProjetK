@@ -1,13 +1,11 @@
 <?php
 
-require_once(DB_CONNECTION);
-
 //Insert les paramètres dans la table utilisateurs de la db
 //@param nickname : le pseudo de l'utilisateur
 //@param pwd : le mot de passe de l'utilisateur
 function insertUser($nickname,$pwd) {
     $db = dbConnect();
-    $req = $db->prepare('INSERT INTO utilisateurs (utilisateurs_id, utilisateurs_pseudo, utilisateurs_pwd, utilisateurs_token) VALUES (NULL,:nickname, :pwd, NULL);');
+    $req = $db->prepare('INSERT INTO utilisateurs (utilisateurs_id, utilisateurs_pseudo, utilisateurs_pwd, utilisateurs_token_autolog, utilisateurs_token_session) VALUES (NULL,:nickname, :pwd, NULL, NULL)');
     $req->bindParam(':nickname',$nickname);
     $req->bindParam(':pwd',$pwd);
     $req->execute();

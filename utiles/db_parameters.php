@@ -1,7 +1,5 @@
 <?php
 
-require_once(DB_CONNECTION);
-
 $db = dbConnect();
 
 $parameters = array();

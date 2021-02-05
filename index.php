@@ -1,6 +1,7 @@
 <?php
 
 require_once('utiles/const_path.php');
+require_once(DB_CONNECTION);
 require_once(realpath(LIST_CONTROLLER));
 
 try {
@@ -15,12 +16,10 @@ try {
       case 'logout':
         logoutController();
         break;
-      default:
-        loginSignup();
     }
   }
   else {
-    loginSignup();
+    header('Location: http://localhost/ProjetK/index.php?action=signup');
   }
 }
 catch(Exception $e) {
