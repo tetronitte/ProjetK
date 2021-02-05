@@ -1,6 +1,7 @@
 <?php
 
-include('../const_path.php');
+include('../utiles/const_path.php');
+include('../utiles/db_connection.php');
 
 //Requête préparée
 //dt -> update token
