@@ -1,5 +1,5 @@
 <?php
-    include('../const_path.php');
+    include('../utiles/const_path.php');
 ?>
 
 <span>INSCRIPTION</span><br/>
