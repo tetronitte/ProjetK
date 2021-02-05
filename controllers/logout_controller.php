@@ -1,11 +1,13 @@
 <?php
 
-include('../utiles/const_path.php');
-include('../utiles/db_connection.php');
+include_once('../utiles/db_connection.php');
+include_once('../utiles/const_path.php');
+
+$db = dbConnect();
 
 //Requête préparée
 //dt -> update token
-$dt = $dbh->prepare('UPDATE utilisateurs SET utilisateurs_token = null WHERE utilisateurs_id = :id;');
+$dt = $db->prepare('UPDATE utilisateurs SET utilisateurs_token = null WHERE utilisateurs_id = :id;');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     session_start();
@@ -20,6 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION = array();
     session_destroy(); 
 }
+//Fermeture de la db
+$db = null;
+
 header('Location: '.LOGIN_SIGNIN);
 exit();
 
@@ -31,4 +36,3 @@ function deleteToken($req,$id) {
     $req->bindParam(':id',$id);
     $req->execute();
 }
-?>

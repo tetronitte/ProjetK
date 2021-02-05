@@ -1,29 +1,31 @@
 <?php
 
-include('../utiles/db_parameters.php');
-include('../utiles/const_path.php');
-include('../utiles/db_connection.php');
+include_once('../utiles/db_connection.php');
+include_once('../utiles/db_parameters.php');
+include_once('../utiles/const_path.php');
+
+$db = dbConnect();
 
 //Requête préparée
 //fu -> find user
 //ut -> update token
-$fu = $dbh->prepare('SELECT utilisateurs_id, utilisateurs_pwd FROM utilisateurs WHERE utilisateurs_pseudo = :nickname');
-$ut = $dbh->prepare('UPDATE utilisateurs SET utilisateurs_token = :token WHERE utilisateurs_id = :id;');
+$fu = $db->prepare('SELECT utilisateurs_id, utilisateurs_pwd FROM utilisateurs WHERE utilisateurs_pseudo = :nickname');
+$ut = $db->prepare('UPDATE utilisateurs SET utilisateurs_token = :token WHERE utilisateurs_id = :id;');
 
 //Tableau d'erreurs
 $errors = array();
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $nickname = checkNickname();
+    $nickname = str_checkNickname();
     if ($nickname != null) {
-        $password = checkPassword($nickname);
+        $password = str_checkPassword($nickname);
     }    
     
     //Si il n'y a pas d'erreurs
     session_start();
     if(empty($errors)) {
-        $res = findUser($fu,$nickname);
+        $res = array_findUser($fu,$nickname);
         $tmp = $res;
         $nbr = $tmp->fetchAll();
         if ($nbr > 0) {//Si on a pas trouvé d'utilisateur
@@ -31,7 +33,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['nickname'] = $nickname;
                 $_SESSION['id'] = $res[0][0];
                 if($_POST['autolog'][0] == 'on') {//Si on veut se log automatiquement on créer un token
-                    $token = generateToken(TOKEN_SIZE);
+                    $token = str_generateToken(TOKEN_SIZE);
                     setcookie('autolog',$token,time()+3600);
                     updateToken($ut,$token,$res[0][0]);
                 }
@@ -54,14 +56,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 //Fermeture de la db
-$dbh = null;
+$db = null;
 
 //Vérification du pseudo
 //@return nickname : le pseudo de l'utilisateur 
-function checkNickname() {
+function str_checkNickname() {
     if(isset($_POST['nickname']) && !empty($_POST['nickname'])) {
-        $nickname = validData($_POST['nickname']);
-        if(!regexNickname($nickname)) $errors[] = 'E_NICKNAME_FALSE_CHARACTER';
+        $nickname = str_validData($_POST['nickname']);
+        if(!str_regexNickname($nickname)) $errors[] = 'E_NICKNAME_FALSE_CHARACTER';
         return $nickname;
     }
     else {
@@ -71,11 +73,11 @@ function checkNickname() {
 
 //Vérification du mot de passe
 //@return password : le mot de passe de l'utilisateur 
-function checkPassword($nickname) {
+function str_checkPassword($nickname) {
     if(isset($_POST['password']) && !empty($_POST['password'])) {
-        $password = validData($_POST['password']);
+        $password = str_validData($_POST['password']);
         if(strlen($password) > 18 || strlen($password) < 8) $errors[] = 'E_PWD_LENGTH';//Si 8 <= pwd <= 18
-        if(!regexPassword($password)) $errors[] = 'E_PWD_FALSE_CHARACTER';//Si au moins 1 chiffre, 1 caractère spécial, 1 lettre minuscule et 1 lettre majuscule
+        if(!str_regexPassword($password)) $errors[] = 'E_PWD_FALSE_CHARACTER';//Si au moins 1 chiffre, 1 caractère spécial, 1 lettre minuscule et 1 lettre majuscule
         return $password;
     }
     else return null;
@@ -85,7 +87,7 @@ function checkPassword($nickname) {
 //@param req : la requête à exécuter
 //@param nickname : la pseudo de l'utilisateur
 //@return arr : tableau comprenant l'id et le mot de passe de l'utilisateur
-function findUser($req,$nickname) {
+function array_findUser($req,$nickname) {
     $arr = array();
     $req->bindParam(':nickname',$nickname);
     $req->execute();
@@ -97,20 +99,20 @@ function findUser($req,$nickname) {
 
 //Vérifie les caractère du pseudo
 //@param string : la chaine de caractère à vérifier
-function regexNickname($string) {
+function str_regexNickname($string) {
     return preg_match('/'.REGEX_NICKNAME.'/',$string);
 }
 
 //Vérifie les caractère du mot de passe
 //@param string : la chaine de caractère à vérifier
-function regexPassword($string) {
+function str_regexPassword($string) {
     return preg_match('/'.REGEX_PASSWORD.'/',$string);
 }
 
 //Transforme la chaine de caractère envoyée par le formulaire pour la sécurisée
 //@param data : la chaine de caractère à vérifier
 //@return data : la chaine transformée
-function validData($data) {
+function str_validData($data) {
     $data = trim($data); //Supprime les espaces en début et fin de chaine
     $data = stripcslashes($data);//Supprime les antislash d'une chaine
     $data = htmlspecialchars($data);//Convertit les caractères spéciaux
@@ -120,7 +122,7 @@ function validData($data) {
 //Créer un token de connexion automatique
 //@param length : taille du token
 //@return token : le token de connexion
-function generateToken($length) {
+function str_generateToken($length) {
     $token = "";
     $string = "123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@&#?!$%";
     shuffle($string);
@@ -140,5 +142,3 @@ function updateToken($req,$token,$id) {
     $req->bindParam(':id',$id);
     $req->execute();
 }
-
-?>
