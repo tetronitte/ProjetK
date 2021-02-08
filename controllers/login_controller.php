@@ -1,7 +1,6 @@
 <?php
 
-require_once(DB_PARAMETERS);
-require_once(LOGIN_MODEL);
+require_once(USER_MANAGER);
 
 session_start();
 
@@ -16,7 +15,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     }  
 
     if(empty($errors)) {
-        $req = findUser($nickname);
+        $userManager = new UserManager();
+        $req = $userManager->findUser($nickname);
         $nbr = $req->rowCount();
         if ($nbr > 0) {
             $result = array();
@@ -24,13 +24,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $result[] = $res;
             }
             if(password_verify($password,$result[0][1])) {
-                $_SESSION['nickname'] = $nickname;
-                $_SESSION['id'] = $result[0][0];
-                if($_POST['autolog'] == 'on') {
-                    $token = bin2hex(random_bytes(TOKEN_SIZE));
-                    setcookie('autolog',$token,time()+3600);
-                    updateToken($token,$result[0][0]);
-                }
+                logging($nickname,$result);
                 header('Location: http://localhost/ProjetK/?action=login');
                 exit();
             }
@@ -43,6 +37,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             throw new Exception('E_LOGIN_FALSE');
             //$errors[] = 'E_LOGIN_FALSE';
         }
+    }
+}
+
+function logging($nickname,$result) {
+    $_SESSION['nickname'] = $nickname;
+    $_SESSION['id'] = $result[0][0];
+    if($_POST['autolog'] == 'on') {
+        $userManager = new UserManager();
+        $tokenSize = $GLOBALS['parameters']->getTokenSize();
+        $tokenTime = $GLOBALS['parameters']->getTokenTime();
+        $token = bin2hex(random_bytes($tokenSize));
+        setcookie('autolog',$token,time()+$tokenTime,'/');
+        $userManager->updateToken($token,$result[0][0]);
     }
 }
 
@@ -74,13 +81,15 @@ function checkPassword($nickname) {
 //Vérifie les caractère du pseudo
 //@param string : la chaine de caractère à vérifier
 function regexNickname($string) {
-    return preg_match('/'.REGEX_NICKNAME.'/',$string);
+    $regex = $GLOBALS['parameters']->getRegexNickname();
+    return preg_match('/'.$regex.'/',$string);
 }
 
 //Vérifie les caractère du mot de passe
 //@param string : la chaine de caractère à vérifier
 function regexPassword($string) {
-    return preg_match('/'.REGEX_PASSWORD.'/',$string);
+    $regex = $GLOBALS['parameters']->getregexPassword();
+    return preg_match('/'.$regex.'/',$string);
 }
 
 //Transforme la chaine de caractère envoyée par le formulaire pour la sécurisée

@@ -1,8 +1,12 @@
 <?php
 
 require_once('utiles/const_path.php');
-require_once(DB_CONNECTION);
-require_once(realpath(LIST_CONTROLLER));
+require_once(LIST_CONTROLLER);
+require_once(PARAMETERS);
+
+global $parameters;
+$parameters = new Parameters();
+$parameters->getParameters();
 
 try {
   if (isset($_GET['action'])) {

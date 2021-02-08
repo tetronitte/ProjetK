@@ -1,19 +1,19 @@
 <?php
 
-require_once(LOGOUT_MODEL);
+require_once(USER_MANAGER);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     session_start();
 
     // Suppression des cookies de connexion automatique
-    if($_POST['noAutolog'] == 'on') {    
-        setcookie('autolog','');
-        deleteToken($_SESSION['id']);
-    }
+    $userManager = new UserManager();
+    setcookie('autolog','',time(),'/');
+    $userManager->deleteToken($_SESSION['id']);
 
     // Suppression des variables de session et de la session
     $_SESSION = array();
-    session_destroy(); 
+    session_destroy();
 }
 
-require_once(LOGIN_SIGNUP);
+header('Location: http://localhost/ProjetK/?action=login');
+exit();

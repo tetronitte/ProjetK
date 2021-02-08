@@ -1,7 +1,6 @@
 <?php
 
-require_once(DB_PARAMETERS);
-require_once(SIGNUP_MODEL);
+require_once(USER_MANAGER);
 
 //Tableau d'erreurs
 $errors = array();
@@ -22,7 +21,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     if(empty($errors)) {
         $password = password_hash($password,PASSWORD_DEFAULT);//On hash le mot de passe
-        $res = insertUser($nickname,$password);//On insert l'utilisateur dans la db
+        $userManager = new UserManager();
+        $res = $userManager->insertUser($nickname,$password);//On insert l'utilisateur dans la db
     }
 }
 
@@ -30,10 +30,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 //@return array : le pseudo de l'utilisateur et le tableau d'erreurs
 function checkNickname() {
     $err = array();
+    $userManager = new UserManager();
     if(isset($_POST['nickname']) && !empty($_POST['nickname'])) {
         $nickname = validData($_POST['nickname']);
         if(!regexNickname($nickname)) $err[] = 'E_NICKNAME_FALSE_CHARACTER';
-        if(existNickname($nickname)) $err[] = 'E_NICKNAME_EXIST';
+        if($userManager->existNickname($nickname)) $err[] = 'E_NICKNAME_EXIST';
         return array($nickname,$err);
     }
     else {
@@ -46,10 +47,12 @@ function checkNickname() {
 function checkPassword($nickname) {
     $err = array();
     if(isset($_POST['password']) && !empty($_POST['password']) && isset($_POST['vPassword']) && !empty($_POST['vPassword'])) {
+        $pwdMinLength = $GLOBALS['parameters']->getPasswordMinLength();
+        $pwdMaxLength = $GLOBALS['parameters']->getPasswordMaxLength();
         $password = validData($_POST['password']);
         $vPassword = validData($_POST['vPassword']);
         if($password == $nickname) $err[] = 'E_PWD_EQUAL_NICKNAME';
-        if(strlen($password) > 18 || strlen($password) < 8) $err[] = 'E_PWD_LENGTH';
+        if(strlen($password) > $pwdMaxLength || strlen($password) < $pwdMinLength) $err[] = 'E_PWD_LENGTH';
         if(!regexPassword($password)) $err[] = 'E_PWD_FALSE_CHARACTER';
         if($password != $vPassword) $err[] = 'E_VPWD_FALSE';
         return array($password,$err);
@@ -60,13 +63,15 @@ function checkPassword($nickname) {
 //Vérifie les caractère du pseudo
 //@param string : la chaine de caractère à vérifier
 function regexNickname($string) {
-    return preg_match('/^([0-9a-zA-ZàáâäæçéèêëîïôœùûüÿÀÂÄÆÇÉÈÊËÎÏÖÔŒÙÛÜŸ \-\']+)$/',$string);
+    $regex = $GLOBALS['parameters']->getRegexNickname();
+    return preg_match('/'.$regex.'/',$string);
 }
 
 //Vérifie les caractère du mot de passe
 //@param string : la chaine de caractère à vérifier
 function regexPassword($string) {
-    return preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{8,18}$/',$string);
+    $regex = $GLOBALS['parameters']->getRegexPassword();
+    return preg_match('/'.$regex.'/',$string);
 }
 
 //Transforme la chaine de caractère envoyée par le formulaire pour la sécurisée

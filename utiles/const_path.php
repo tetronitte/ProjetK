@@ -9,9 +9,9 @@
     define('LOGOUT_CONTROLLER',realpath('controllers/logout_controller.php'));
 
     //MODELS
-    define('SIGNUP_MODEL',realpath('models/signup_model.php'));
-    define('LOGIN_MODEL',realpath('models/login_model.php'));
-    define('LOGOUT_MODEL',realpath('models/logout_model.php'));
+    define('USER_MANAGER',realpath('models/UserManager.php'));
+    define('MANAGER',realpath('models/Manager.php'));
+    define('PARAMETERS',realpath('models/Parameters.php'));
 
     //VIEWS
     define('LOGIN_SIGNUP',realpath('views/login_signup.php'));
@@ -20,17 +20,16 @@
     define('INDEX',realpath('index.php'));
 
     //UTILES
-    define('DB_PARAMETERS',realpath('utiles/db_parameters.php'));
-    define('DB_CONNECTION',realpath('utiles/db_connection.php'));
+    
 
     // var_dump(DB_INI);
     // var_dump(LIST_CONTROLLER);
     // var_dump(LOGIN_CONTROLLER);
     // var_dump(SIGNUP_CONTROLLER);
     // var_dump(LOGOUT_CONTROLLER);
-    // var_dump(SIGNUP_MODEL);
+    // var_dump(USER_MANAGER);
+    // var_dump(MANAGER);
+    // var_dump(PARAMETERS);
     // var_dump(LOGIN_SIGNUP);
     // var_dump(INDEX);
-    // var_dump(DB_PARAMETERS);
-    // var_dump(DB_CONNECTION);
     // exit();
