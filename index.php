@@ -1,6 +1,6 @@
 <?php
 
-require_once('utiles/const_path.php');
+require_once('utils/const_path.php');
 require_once(LIST_CONTROLLER);
 require_once(PARAMETERS);
 
