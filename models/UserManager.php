@@ -7,7 +7,7 @@ class UserManager extends Manager {
     //@param pwd : le mot de passe de l'utilisateur
     function insertUser($nickname,$pwd) {
         $db = $this->dbConnect();
-        $req = $db->prepare('INSERT INTO utilisateurs (utilisateurs_id, utilisateurs_pseudo, utilisateurs_pwd, utilisateurs_token_autolog, utilisateurs_token_session) VALUES (NULL,:nickname, :pwd, NULL, NULL)');
+        $req = $db->prepare('INSERT INTO utilisateurs (utilisateurs_id, utilisateurs_pseudo, utilisateurs_pwd, utilisateurs_token_autolog) VALUES (NULL,:nickname, :pwd, NULL)');
         $req->bindParam(':nickname',$nickname);
         $req->bindParam(':pwd',$pwd);
         $req->execute();
