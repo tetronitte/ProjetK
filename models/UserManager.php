@@ -7,7 +7,7 @@ class UserManager extends Manager {
     //@param pwd : le mot de passe de l'utilisateur
     function insertUser($nickname,$pwd) {
         $db = $this->dbConnect();
-        $req = $db->prepare('INSERT INTO utilisateurs (utilisateurs_id, utilisateurs_pseudo, utilisateurs_pwd, utilisateurs_token_autolog) VALUES (NULL,:nickname, :pwd, NULL)');
+        $req = $db->prepare('INSERT INTO users (id, nockname, pwd, token_autolog) VALUES (NULL,:nickname, :pwd, NULL)');
         $req->bindParam(':nickname',$nickname);
         $req->bindParam(':pwd',$pwd);
         $req->execute();
@@ -20,7 +20,7 @@ class UserManager extends Manager {
     //@return bool : si il ya ou non une valeur sélectionnée
     function existNickname($nickname) {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT utilisateurs_id FROM utilisateurs WHERE utilisateurs_pseudo = :nickname');
+        $req = $db->prepare('SELECT id FROM users WHERE nickname = :nickname');
         $req->bindParam(':nickname',$nickname);
         $req->execute();
         $nbr = $req->rowCount();
@@ -33,7 +33,7 @@ class UserManager extends Manager {
     //@param id : l'id de l'utilisateur
     function deleteToken($id) {
         $db = $this->dbConnect();
-        $req = $db->prepare('UPDATE utilisateurs SET utilisateurs_token_autolog = null WHERE utilisateurs_id = :id;');
+        $req = $db->prepare('UPDATE users SET token_autolog = null WHERE id = :id;');
         $req->bindParam(':id',$id);
         $req->execute();
         $req->closeCursor();
@@ -45,7 +45,7 @@ class UserManager extends Manager {
     //@param id : l'id de l'utilisateur
     function updateToken($token,$id) {
         $db = $this->dbConnect();
-        $req = $db->prepare('UPDATE utilisateurs SET utilisateurs_token_autolog = :token WHERE utilisateurs_id = :id');
+        $req = $db->prepare('UPDATE users SET token_autolog = :token WHERE id = :id');
         $req->bindParam(':token',$token);
         $req->bindParam(':id',$id);
         $req->execute();
@@ -58,7 +58,7 @@ class UserManager extends Manager {
     //@return arr : tableau comprenant l'id et le mot de passe de l'utilisateur
     function findUser($nickname) {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT utilisateurs_id, utilisateurs_pwd FROM utilisateurs WHERE utilisateurs_pseudo = :nickname');
+        $req = $db->prepare('SELECT id, pwd FROM users WHERE nickname = :nickname');
         $req->bindParam(':nickname',$nickname);
         $req->execute();
         $db = $this->dbClose();
