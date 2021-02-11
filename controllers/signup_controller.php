@@ -21,7 +21,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     if(empty($errors)) {
         $password = password_hash($password,PASSWORD_DEFAULT);//On hash le mot de passe
-        $userManager = new UserManager();
+        $userManager = new User_Manager();
         $res = $userManager->insertUser($nickname,$password);//On insert l'utilisateur dans la db
     }
 }
@@ -60,23 +60,31 @@ function checkPassword($nickname) {
     else return array(null,$err);
 }
 
-//Vérifie les caractère du pseudo
-//@param string : la chaine de caractère à vérifier
+/**
+ * @param mixed $string
+ * 
+ * @return [type]
+ */
 function regexNickname($string) {
     $regex = $GLOBALS['parameters']->getRegexNickname();
     return preg_match('/'.$regex.'/',$string);
 }
 
-//Vérifie les caractère du mot de passe
-//@param string : la chaine de caractère à vérifier
+/**
+ * @param mixed $string
+ * 
+ * @return [type]
+ */
 function regexPassword($string) {
     $regex = $GLOBALS['parameters']->getRegexPassword();
     return preg_match('/'.$regex.'/',$string);
 }
 
-//Transforme la chaine de caractère envoyée par le formulaire pour la sécurisée
-//@param data : la chaine de caractère à vérifier
-//@return data : la chaine transformée
+/**
+ * @param mixed $data
+ * 
+ * @return [type]
+ */
 function validData($data) {
     $data = trim($data); //Supprime les espaces en début et fin de chaine
     $data = stripcslashes($data);//Supprime les antislash d'une chaine

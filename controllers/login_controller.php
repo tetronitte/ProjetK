@@ -15,7 +15,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     }  
 
     if(empty($errors)) {
-        $userManager = new UserManager();
+        $userManager = new User_Manager();
         $req = $userManager->findUser($nickname);
         $nbr = $req->rowCount();
         if ($nbr > 0) {
@@ -40,6 +40,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
+/**
+ * @param mixed $nickname
+ * @param mixed $result
+ * 
+ * @return [type]
+ */
 function logging($nickname,$result) {
     $_SESSION['nickname'] = $nickname;
     $_SESSION['id'] = $result[0][0];
@@ -53,8 +59,9 @@ function logging($nickname,$result) {
     }
 }
 
-//Vérification du pseudo
-//@return nickname : le pseudo de l'utilisateur 
+/**
+ * @return [type]
+ */
 function checkNickname() {
     if(isset($_POST['nickname']) && !empty($_POST['nickname'])) {
         $nickname = validData($_POST['nickname']);
@@ -66,8 +73,11 @@ function checkNickname() {
     }
 }
 
-//Vérification du mot de passe
-//@return password : le mot de passe de l'utilisateur 
+/**
+ * @param mixed $nickname
+ * 
+ * @return [type]
+ */
 function checkPassword($nickname) {
     if(isset($_POST['password']) && !empty($_POST['password'])) {
         $password = validData($_POST['password']);
@@ -78,23 +88,31 @@ function checkPassword($nickname) {
     else return null;
 }
 
-//Vérifie les caractère du pseudo
-//@param string : la chaine de caractère à vérifier
+/**
+ * @param mixed $string
+ * 
+ * @return [type]
+ */
 function regexNickname($string) {
     $regex = $GLOBALS['parameters']->getRegexNickname();
     return preg_match('/'.$regex.'/',$string);
 }
 
-//Vérifie les caractère du mot de passe
-//@param string : la chaine de caractère à vérifier
+/**
+ * @param mixed $string
+ * 
+ * @return [type]
+ */
 function regexPassword($string) {
     $regex = $GLOBALS['parameters']->getregexPassword();
     return preg_match('/'.$regex.'/',$string);
 }
 
-//Transforme la chaine de caractère envoyée par le formulaire pour la sécurisée
-//@param data : la chaine de caractère à vérifier
-//@return data : la chaine transformée
+/**
+ * @param mixed $data
+ * 
+ * @return [type]
+ */
 function validData($data) {
     $data = trim($data); //Supprime les espaces en début et fin de chaine
     $data = stripcslashes($data);//Supprime les antislash d'une chaine

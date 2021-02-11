@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     session_start();
 
     // Suppression des cookies de connexion automatique
-    $userManager = new UserManager();
+    $userManager = new User_Manager();
     setcookie('autolog','',time(),'/');
     $userManager->deleteToken($_SESSION['id']);
 

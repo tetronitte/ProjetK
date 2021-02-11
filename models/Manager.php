@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * [Description Manager]
+ */
 class Manager {
 
+    /**
+     * @return [type]
+     */
     protected function dbConnect() {
         $database = parse_ini_file(DB_INI);
         $host = $database['host'];
@@ -17,6 +23,9 @@ class Manager {
         }
     }
 
+    /**
+     * @return [type]
+     */
     public function dbClose() {
         return null;
     }
